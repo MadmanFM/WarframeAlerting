@@ -1,0 +1,59 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    compileSdkVersion build_versions.compileSdkVersion
+    buildToolsVersion build_versions.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.fm.warframealerting"
+        minSdkVersion build_versions.minSdkVersion
+        targetSdkVersion build_versions.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+        // Enable Coroutines and Flow APIs
+        freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+        freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.FlowPreview"
+    }
+
+    buildFeatures {
+        dataBinding = true
+    }
+}
+
+dependencies {
+    deps.implementation.each { k, v -> implementation v }
+    deps.testImplementation.each { k, v -> implementation v }
+    deps.androidTestImplementation.each { k, v -> implementation v }
+
+    deps.other.each { k, v -> implementation v }
+
+    deps.kapt.each { k, v -> kapt v }
+    deps.navigation.each { k, v -> implementation v }
+    deps.room.each { k, v -> implementation v }
+    deps.hilt.each { k, v -> implementation v }
+    deps.lifecycle.each { k, v -> implementation v }
+    deps.coroutines.each { k, v -> implementation v }
+}

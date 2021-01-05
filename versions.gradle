@@ -1,0 +1,126 @@
+def build_versions = [
+        compileSdkVersion: 30,
+        buildToolsVersion: "30.0.2",
+        minSdkVersion    : 21,
+        targetSdkVersion : 30
+]
+
+def versions = [
+        gradle              : "4.1.1",
+        kotlin              : "1.4.21",
+        versionPlugin       : '0.36.0',
+        hilt                : "2.28.3-alpha",
+        core_ktx            : "1.3.2",
+        appcompat           : "1.2.0",
+        material            : "1.2.1",
+        constraintlayout    : "2.0.4",
+        recyclerView        : '1.1.0',
+        collection_ktx      : "1.1.0",
+        fragment_ktx        : "1.2.5",
+        viewpager2          : "1.0.0",
+        junit               : "4.13.1",
+        nav_version         : "2.3.2",
+        room_version        : "2.2.6",
+        hilt_viewmodel      : "1.0.0-alpha02",
+        lifecycle           : "2.2.0",
+        coroutines          : "1.3.7",
+        adapter_helper      : "3.0.4",
+        retorfit            : "2.9.0",
+        smart_refresh_layout: "2.0.2",
+        gson                : "2.8.2",
+        logging_interceptor : "4.7.2",
+]
+
+def plugin = [
+        gradle        : "com.android.tools.build:gradle:$versions.gradle",
+        kotlin        : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
+        hilt          : "com.google.dagger:hilt-android-gradle-plugin:$versions.hilt",
+        version_plugin: "com.github.ben-manes:gradle-versions-plugin:$versions.versionPlugin",
+]
+
+def implementation = [
+        kotlin_stdlib   : "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin",
+        core_ktx        : "androidx.core:core-ktx:$versions.core_ktx",
+        appcompat       : "androidx.appcompat:appcompat:$versions.appcompat",
+        material        : "com.google.android.material:material:$versions.material",
+        constraintlayout: "androidx.constraintlayout:constraintlayout:$versions.constraintlayout",
+        recyclerview    : "androidx.recyclerview:recyclerview:$versions.recyclerView",
+        viewpager2      : "androidx.viewpager2:viewpager2:$versions.viewpager2",
+        collection_ktx  : "androidx.collection:collection-ktx:$versions.collection_ktx",
+        fragment_ktx    : "androidx.fragment:fragment-ktx:$versions.fragment_ktx"
+]
+
+def testImplementation = [
+        junit: "junit:junit:$versions.junit"
+]
+
+def androidTestImplementation = [
+        test_ext_junit: "androidx.test.ext:junit:1.1.2",
+        espresso_core : "androidx.test.espresso:espresso-core:3.3.0"
+]
+
+def other = [
+        gson                            : "com.google.code.gson:gson:$versions.gson",
+        retrofit                        : "com.squareup.retrofit2:retrofit:$versions.retorfit",
+        retrofit_converter_gson         : "com.squareup.retrofit2:converter-gson:$versions.retrofit",
+        logging_interceptor             : "com.squareup.okhttp3:logging-interceptor:$versions.okhttp_logging",
+        smart_refresh_layout            : "com.scwang.smart:refresh-layout-kernel:$versions.smart_refresh_layout",
+        base_recyclerview_adapter_helper: "com.github.CymChad:BaseRecyclerViewAdapterHelper:$versions.adapter_helper",
+]
+
+def kapt = [
+        room_compiler        : "androidx.room:room-compiler:$versions.room_version",
+        hilt_compiler        : "androidx.hilt:hilt-compiler:$versions.hilt_viewmodel",
+        hilt_android_compiler: "com.google.dagger:hilt-android-compiler:$versions.hilt",
+]
+
+def room = [
+        runtime: "androidx.room:room-runtime:$versions.room_version",
+        ktx    : "androidx.room:room-ktx:$versions.room_version"
+]
+
+def navigation = [
+        fragment_ktx: "androidx.navigation:navigation-fragment-ktx:$versions.nav_version",
+        ui_ktx      : "androidx.navigation:navigation-ui-ktx:$versions.nav_version"
+]
+
+def hilt = [
+        android  : "com.google.dagger:hilt-android:$versions.hilt",
+        viewmodel: "androidx.hilt:hilt-lifecycle-viewmodel:$versions.hilt_viewmodel"
+]
+
+def lifecycle = [
+        extensions   : "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle",
+        runtime_ktx  : "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle",
+        livedata_ktx : "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle",
+        viewmodel_ktx: "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle",
+]
+
+def coroutines = [
+        android: "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines",
+        core   : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
+]
+
+def deps = [
+        plugin                   : plugin,
+        implementation           : implementation,
+        testImplementation       : testImplementation,
+        androidTestImplementation: androidTestImplementation,
+        other                    : other,
+        kapt                     : kapt,
+        navigation               : navigation,
+        room                     : room,
+        hilt                     : hilt,
+        lifecycle                : lifecycle,
+        coroutines               : coroutines
+]
+ext.deps = deps
+ext.build_versions = build_versions
+
+static def addRepos(RepositoryHandler handler) {
+    handler.maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    handler.maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+    handler.maven { url 'http://maven.aliyun.com/nexus/content/repositories/google' }
+}
+
+ext.addRepos = this.&addRepos
